@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -119,10 +122,31 @@ public class Server extends JFrame
       do // process messages sent from client
       { 
          try // read message and display it
-         {
-            message = (String) input.readObject(); // read new message
-            displayMessage("\n" + message); // display message
-         } 
+            {
+           	
+            	String DELIMITER = ",";
+            	String line;
+            	String request = (String) input.readObject();
+               displayMessage("\n" + request); // display message               
+
+           	if (request.equals("CLIENT>>> airlines")) {
+           		BufferedReader list = Files.newBufferedReader(Paths.get("C:\\development\\airlines.csv"));
+           		line = list.readLine();
+           		String[] columns = line.split(DELIMITER);
+           		displayMessage("\n" + line); // display message
+           		sendData(line);
+           	} else if (request.equals("CLIENT>>> planes")) {
+           		System.out.print("\nHere");
+           		BufferedReader list = Files.newBufferedReader(Paths.get("C:\\development\\passengerJetPlanes.csv"));
+           		line = list.readLine();
+           		String[] columns = line.split(DELIMITER);
+           		displayMessage("\n" + columns); // display message
+           		sendData(line);
+           	} else {
+           		sendData("Please select from airlines or planes");
+           	}
+               
+            } 
          catch (ClassNotFoundException classNotFoundException) 
          {
             displayMessage("\nUnknown object type received");
