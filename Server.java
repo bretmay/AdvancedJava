@@ -128,7 +128,7 @@ public class Server extends JFrame
             displayMessage("\nUnknown object type received");
          } 
 
-      } while (!message.equals("CLIENT>>> TERMINATE"));
+      } while (!"CLIENT>>> TERMINATE".equals(message));
    }
 
    // close streams and socket
