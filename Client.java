@@ -122,7 +122,7 @@ public class Client extends JFrame
             displayMessage("\nUnknown object type received");
          } 
 
-      } while (!message.equals("SERVER>>> TERMINATE"));
+      } while (!"SERVER>>> TERMINATE".equals(message));
    }
 
    // close streams and socket
